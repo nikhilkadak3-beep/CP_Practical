@@ -1,0 +1,69 @@
+import math
+
+raw_kc = input("Enter Kc: ")
+print("Raw input:", raw_kc)
+print("Raw input type:", type(raw_kc).__name__)
+
+try:
+	kc = float(raw_kc)
+except ValueError:
+	print("Invalid input: Kc must be a number greater than zero.")
+else:
+	print("Converted Kc:", kc)
+	print("Converted value type:", type(kc).__name__)
+
+	if not math.isfinite(kc) or kc <= 0:
+		print("Invalid input: Kc must be a finite number greater than zero.")
+	else:
+		# Kc*x^2 - (3*Kc + 1)*x + 2*Kc = 0
+		a = kc
+		b = -(3 * kc + 1)
+		c = 2 * kc
+		discriminant = b**2 - 4 * a * c
+
+		print(f"Quadratic coefficients: a={a}, b={b}, c={c}")
+		print("Discriminant:", discriminant)
+
+		if discriminant < 0:
+			print("No real roots; equilibrium concentrations cannot be calculated.")
+		else:
+			root1 = (-b + math.sqrt(discriminant)) / (2 * a)
+			root2 = (-b - math.sqrt(discriminant)) / (2 * a)
+			print(f"Roots: {root1:.6f}, {root2:.6f}")
+
+			# Since B is limiting, the physical extent must satisfy 0 <= x <= 1.
+			physical_roots = [root for root in (root1, root2) if 0 <= root <= 1]
+			if not physical_roots:
+				print("No physically meaningful root in the range 0 <= x <= 1.")
+			else:
+				x = physical_roots[0]
+				equilibrium_a = 2 - x
+				equilibrium_b = 1 - x
+				equilibrium_c = x
+				conversion = x / 1 * 100
+
+				print(f"Equilibrium [A]: {equilibrium_a:.3f} mol/L")
+				print(f"Equilibrium [B]: {equilibrium_b:.3f} mol/L")
+				print(f"Equilibrium [C]: {equilibrium_c:.3f} mol/L")
+				print(f"Conversion of limiting reactant B: {conversion:.3f}%")
+
+				if conversion >= 70:
+					classification = "High"
+				elif conversion >= 40:
+					classification = "Moderate"
+				else:
+					classification = "Low"
+				print("Conversion classification:", classification) 
+                 Enter Kc: 0.5
+Raw input: 0.5
+Raw input type: str
+Converted Kc: 0.5
+Converted value type: float
+Quadratic coefficients: a=0.5, b=-2.5, c=1.0
+Discriminant: 4.25
+Roots: 4.561553, 0.438447
+Equilibrium [A]: 1.562 mol/L
+Equilibrium [B]: 0.562 mol/L
+Equilibrium [C]: 0.438 mol/L
+Conversion of limiting reactant B: 43.845%
+Conversion classification: Moderate

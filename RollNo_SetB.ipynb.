@@ -1,0 +1,2 @@
+In a reactor with excess A ,the reaction A + B equilibrium C reaches equilibrium initial concentration are [A]o =2 [B]o=1.0 [C]o=0 mol/l if x mol/l of c is formed ,Kc =x/(2-x)(1-x), which rearranges to the quadratic equation Kc.x^2 -(3Kc+1).x+2Kc =0   Write a python program that: 
+(a) reads Kc using input(),prints the  data type of the raw input and of the converted value and shows a clear message (no crash)if the text is not a number or if Kc<=0;
